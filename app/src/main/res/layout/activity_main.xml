@@ -14,12 +14,13 @@
         android:text="開啟前台通知服務，即使關閉了App，仍能每5秒更新經緯度\n"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/startButton"
-        android:text="啟用定位服務"
-        android:textSize="24sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="啟用定位服務"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/stopButton"
@@ -28,4 +29,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/tv_labelCrumbCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="WayPoints:"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_countOfCrumbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/tv_labelCrumbCounter"
+        app:layout_constraintTop_toTopOf="@+id/tv_labelCrumbCounter" />
+
+    <Button
+        android:id="@+id/btn_newWayPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="點擊將現在位置加入列表"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_labelCrumbCounter" />
+
+    <Button
+        android:id="@+id/btn_showWayPointList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="顯示新加入的位置列表"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_newWayPoint" />
 </LinearLayout>

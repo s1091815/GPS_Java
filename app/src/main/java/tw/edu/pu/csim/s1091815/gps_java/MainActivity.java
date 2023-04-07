@@ -3,6 +3,7 @@ package tw.edu.pu.csim.s1091815.gps_java;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.Manifest;
 import android.app.AlertDialog;
@@ -15,20 +16,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private Util util = new Util();
     private LocationService myLocationService = new LocationService();
     private Intent serviceIntent;
 
-    private Button startButton;
-    private Button stopButton;
+    TextView tv_countOfCrumbs;
+    Button startButton, stopButton, btn_newWaypoint, btn_showWayPointList;
 
+    Location currentLocation;
+
+    List<Location> savedLocations;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -38,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
+        btn_newWaypoint = findViewById(R.id.btn_newWayPoint);
+        btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
+        tv_countOfCrumbs = findViewById(R.id.tv_countOfCrumbs);
+
         startButton.setOnClickListener(view -> {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -67,6 +78,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
         });
         stopButton.setOnClickListener(view -> stopServiceFunc());
+
+        btn_newWaypoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get the gps location
+
+                // add the new location to the global llist;
+                MyApplication myApplication = (MyApplication)getApplicationContext();
+                savedLocations = myApplication.getMyLocations();
+                savedLocations.add(currentLocation);
+                tv_countOfCrumbs.setText(Integer.toString(savedLocations.size()));
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -129,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     Toast.makeText(this, "拒絕背景位置資訊存取權", Toast.LENGTH_LONG).show();
                 }
                 break;
+
+
         }
     }
 
